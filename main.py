@@ -60,6 +60,28 @@ def extract_description_near_link(a_tag) -> str:
       This course introduces ...
     We'll take the first meaningful text after the link in the same container.
     """
+    # If the link is inside a <dt>, the description is usually in the next <dd>.
+    dt = a_tag.find_parent("dt")
+    if dt:
+        dd = dt.find_next_sibling("dd")
+        if dd:
+            text = clean_ws(dd.get_text(" ", strip=True))
+            if text:
+                if "Description:" in text:
+                    text = text.split("Description:", 1)[1]
+                for stop in (
+                    "Units:",
+                    "Sections offered:",
+                    "Section(s) offered:",
+                    "Prerequisite:",
+                    "Prerequisites:",
+                    "Corequisite:",
+                    "Corequisites:",
+                ):
+                    if stop in text:
+                        text = text.split(stop, 1)[0]
+                return clean_ws(text)
+
     # Try next siblings first
     for node in a_tag.next_siblings:
         # stop if we hit another course link
