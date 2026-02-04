@@ -252,8 +252,13 @@ def main():
             print(f"[ERROR] {subj}: {e}")
 
     df = pd.DataFrame(all_rows).drop_duplicates(subset=["course_id"])
-    df.to_csv(args.out, index=False)
-    print(f"Saved {len(df):,} courses to {args.out}")
+    if args.term:
+        out_path = f"{args.term}_{args.out}"
+    else:
+        out_path = args.out
+    print(f"Saving to {out_path}")
+    df.to_csv(out_path, index=False)
+    print(f"Saved {len(df):,} courses to {out_path}")
 
 
 if __name__ == "__main__":

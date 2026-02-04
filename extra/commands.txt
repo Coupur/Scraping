@@ -1,0 +1,16 @@
+
+scraper
+python main.py --prefixes prefixes.txt --term 1261 --out nau_courses.csv
+
+
+python main.py --in 1254_nau_courses.csv --out nau_courses.csv
+python main.py --in 1261_nau_courses.csv --out nau_courses.csv
+python main.py --in 1264_nau_courses.csv --out nau_courses.csv
+
+
+#ai filter
+python filter_ai.py --in nau_sourses.csv --out nau_courses_ai.csv
+
+python filter_ai.py --in 1254_nau_courses.csv --out 1254_nau_courses_ai.csv
+python filter_ai.py --in 1261_nau_courses.csv --out 1261_nau_courses_ai.csv
+python filter_ai.py --in 1264_nau_courses.csv --out 1264_nau_courses_ai.csv

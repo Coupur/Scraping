@@ -1,0 +1,65 @@
+---
+title: "Course Description analysis"
+format: pdf
+editor: visual
+---
+
+## Summary
+
+**Total courses scanned**
+
+semester: 1261, 1264
+
+Total courses: 12,325 courses
+
+Total courses descriptions changed: 24 courses
+
+Total none duplicated courses: 6,151 courses
+
+semesters: 1254, 1261, 1264
+
+Total courses: 18,547 courses
+
+Total courses descriptions changed: 621 courses
+
+Total none duplicated courses: 6,195 courses
+
+**\# and % that mention AI-related terms**
+
+41 AI-related courses total
+
+(41 AI-related courses total) /(6153 total) = 0.666%
+
+-   Top departments/colleges by count
+
+<!-- -->
+
+-   How many are **intro vs advanced** (100/200 vs 300/400/grad
+
+<!-- -->
+
+-   2–4 key takeaways (example: “AI content is concentrated in X, with limited coverage in Y”)
+
+## What we did
+
+## How we detected AI topics What we did
+
+-   Data source (catalog descriptions
+
+<!-- -->
+
+-   Keyword/phrase search strategy (include examples
+
+<!-- -->
+
+-   Any filtering rules (e.g., “AI” as a standalone word vs inside another word)
+
+<!-- -->
+
+-    How you reduced false positives (like “aim” matching “ai” — this matters)
+
+## Key counts + where they are (departments/colleges)Trends/gaps
+
+## Trends/gaps
+
+## Recommendations / next steps
