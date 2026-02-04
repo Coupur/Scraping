@@ -1,0 +1,108 @@
+---
+title: "Course Description analysis"
+format: pdf
+editor: visual
+---
+
+## Summary
+
+**Total courses scanned**
+
+Included Semesters: 1261, 1264
+
+Total courses: 12,325 courses
+
+Total courses descriptions changed: 24 courses
+
+Total none duplicated courses: 6,151 courses
+
+Included Semesters: 1254, 1261, 1264
+
+Total courses: 18,547 courses
+
+Total courses descriptions changed: 621 courses
+
+Total none duplicated courses: 6,195 courses
+
+**\# and % that mention AI-related terms**
+
+Included Semesters: 1261, 1264
+
+19 AI-related courses total
+
+(19 AI-related courses total) /(6153 total) = 0.3%
+
+![](C:\Users\samut\Desktop\DataSciClub\Scraping\dept_counts.png)
+
+![](C:\Users\samut\Desktop\DataSciClub\Scraping\level_split.png)
+
+Key Courses:
+
+**ART 376**
+
+**CIT 460**
+
+**CS 102**
+
+**CS 413**
+
+**CS 413H**
+
+**CS 470 - A**
+
+**CS 470H**
+
+**CS 472**
+
+**CS 570**
+
+**CS 572**
+
+**CS 573**
+
+**EE 443**
+
+**EE 543**
+
+**ETC 767**
+
+**INF 504**
+
+**INF 586**
+
+**PRM 165**
+
+**PSY 305**
+
+**PSY 305H**\
+\
+\
+
+## What we did
+
+## How we detected AI topics What we did
+
+I used the "Course-Numbering-and-Prefixes-EXISTING.pdf" as our list of course Ids. We collected 2 smesters of data and combined duplicated course. If the course ids were diffrent we saved them separate.
+
+My key word search was \
+**\
+Strict:**\
+ai, ai-, artificial intelligence, artificial intelligent, gpt, chatgpt, llm, machine learning, generative, bgenarative\
+**\
+Broad Fuzzy search**\
+intelligence\
+agent\
+agentic
+
+\
+**Human Anaysis\
+**I hand edit the CSV file to not include courses we falsely added.
+
+## Key counts + where they are (departments/colleges)Trends/gaps
+
+```         
+```
+
+## Trends/gaps
+
+## Recommendations / next steps
