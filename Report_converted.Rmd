@@ -1,0 +1,180 @@
+---
+title: "IAAAI Report"
+author: "Sam Utzinger"
+output:
+  pdf_document: default
+  word_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+
+2026-02-04 by Sam Utzinger
+
+
+A total of 12,325 courses were scraped and 6151 were not duplicated over semesters. 41 contained "AI" related terms and I deemed only 19 of those actually teach about ai.
+
+
+```{r chunk_1, echo=FALSE}
+library(tidyverse)   # readr, dplyr, ggplot2, stringr, tibble
+library(knitr)       # kable tables (optional)
+```
+
+```{r plot_theme, echo=FALSE}
+
+theme_report <- function(base_size = 10) {
+  theme_minimal(base_size = base_size) +
+    theme(
+      plot.title.position = "plot",
+      plot.title = element_text(face = "bold"),
+      plot.subtitle = element_text(color = "grey30"),
+      axis.title.y = element_text(margin = margin(r = 6)),
+      axis.title.x = element_text(margin = margin(t = 6)),
+      panel.grid.major.y = element_blank(),
+      panel.grid.minor = element_blank()
+    )
+}
+```
+
+
+```{r chunk_2, echo=FALSE, fig.height=3, fig.width=4.5}
+input <- "C:/Users/samut/Desktop/DataSciClub/Scraping/data/handmade_nau_courses_ai.csv"
+top <- 20
+
+df <- readr::read_csv(input, show_col_types = FALSE)
+
+counts <- df %>%
+  count(subject, name = "Count") %>%
+  arrange(Count)
+
+if (!is.null(top) && top > 0) {
+  counts <- counts %>% slice_tail(n = top)
+}
+
+created_table <- tibble(
+  Subject = c("CS", "EE", "INF", "PSY", "ART", "CIT", "ETC", "PRM"),
+  Count   = c(9, 2, 2, 2, 1, 1, 1, 1)
+)
+kable(created_table)
+
+ggplot(counts, aes(x = reorder(subject, Count), y = Count)) +
+  geom_col(width = 0.75) +
+  geom_text(aes(label = Count), hjust = -0.15, size = 3) +
+  coord_flip(clip = "off") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
+  labs(
+    title = paste0("Top ", nrow(counts), " Departments with AI-Related Courses"),
+    subtitle = "Counts from the curated AI course list",
+    x = NULL,
+    y = "Number of courses"
+  ) +
+  theme_report() +
+  theme(plot.margin = margin(5.5, 20, 5.5, 5.5))  # adds right margin for labels
+
+```
+
+
+\pagebreak
+
+\newpage
+
+## Course Levels
+
+
+```{r course_levels, echo=FALSE, fig.height=3, fig.width=4.5}
+input_csv  <- "C:/Users/samut/Desktop/DataSciClub/Scraping/data/handmade_nau_courses_ai.csv"
+output_png <- "level_split.png"
+
+df <- readr::read_csv(input_csv, show_col_types = FALSE)
+
+df2 <- df %>%
+  mutate(
+    course_num = as.integer(stringr::str_extract(course_display, "\\d{3}")),
+    level = case_when(
+      !is.na(course_num) & between(course_num, 100, 299) ~ "Intro (100-200)",
+      !is.na(course_num) & between(course_num, 300, 499) ~ "Advanced (300-400)",
+      !is.na(course_num) & course_num >= 500            ~ "Graduate (500+)",
+      TRUE                                              ~ "Unknown"
+    )
+  )
+
+counts_level <- df2 %>%
+  count(level, name = "Count") %>%
+  mutate(level = factor(level, levels = c(
+    "Intro (100-200)", "Advanced (300-400)", "Graduate (500+)", "Unknown"
+  ))) %>%
+  arrange(level)
+
+counts_level2 <- counts_level %>%
+  filter(level != "Unknown") %>%
+  mutate(
+    pct = Count / sum(Count),
+    label = paste0(Count, " (", scales::percent(pct, accuracy = 1), ")")
+  )
+
+
+```
+
+
+
+
+
+```{r chunk_4, echo=FALSE, fig.height=3, fig.width=4.5}
+df_table2 <- tibble(
+  Subject = c(
+    "Technical AI/ML (methods)",
+    "Applied AI/ML (domain/project)",
+    "AI literacy / ethics / impact",
+    "AI-adjacent (robotics/generative art)",
+    "Generative AI / learning analytics"
+  ),
+  Count = c(9, 5, 3, 1, 1)
+)
+
+kable(df_table2)
+ggplot(counts_level2, aes(x = reorder(level, Count), y = Count)) +
+  geom_col(width = 0.7) +
+  geom_text(aes(label = label), hjust = -0.15, size = 3) +
+  coord_flip(clip = "off") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
+  labs(
+    title = "AI Course Levels",
+    subtitle = "Intro vs Advanced vs Graduate",
+    x = NULL,
+    y = "Number of courses"
+  ) +
+  theme_report() +
+  theme(plot.margin = margin(5.5, 22, 5.5, 5.5))
+```
+
+
+
+
+
+\
+## Course Topics
+
+```{r chunk_5, echo=FALSE, fig.height=3, fig.width=4.5}
+
+df_table2_plot <- df_table2 %>%
+  mutate(Subject_wrapped = stringr::str_wrap(Subject, width = 28))
+
+ggplot(df_table2_plot, aes(x = reorder(Subject_wrapped, Count), y = Count)) +
+  geom_col(width = 0.75) +
+  geom_text(aes(label = Count), hjust = -0.15, size = 3) +
+  coord_flip(clip = "off") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
+  labs(
+    title = "AI Courses by Category",
+    subtitle = "Grouped by emphasis (methods, applied, literacy, adjacent)",
+    x = NULL,
+    y = "Number of courses"
+  ) +
+  theme_report() +
+  theme(plot.margin = margin(5.5, 26, 5.5, 5.5))
+
+
+```
